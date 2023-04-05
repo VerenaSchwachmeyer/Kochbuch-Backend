@@ -4,9 +4,13 @@ const categories = require("./routes/categories");
 const cors = require("cors");
 
 // whitelist
-const whitelist = ["http://localhost:3000", "http://localhost:3001"];
+const whitelist = [
+  "http://localhost:8000",
+  "http://localhost:3000",
+  "http://localhost:3000/category/1",
+];
 
-const corsOptions = {
+var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
       callback(null, true);
@@ -16,14 +20,11 @@ const corsOptions = {
   },
 };
 
-app.use(cors(corsOptions));
-
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/category", categories);
+app.use("/", cors(), categories);
 // app.use(cors());
-
-const port = 3000;
 
 module.exports = app;
