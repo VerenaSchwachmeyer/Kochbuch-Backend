@@ -3,18 +3,17 @@ const categories = Router();
 const pool = require("../db");
 
 categories.get("/", async (req, res) => {
-  console.log(pool);
   try {
     const { rows } = await pool.query("select * from category;");
     res.json(rows);
   } catch (err) {
+    console.log(err);
     res.sendStatus(500);
   }
 });
 
 categories.get("/category/:id", async (req, res) => {
   const { id } = req.params;
-  console.log(id);
   try {
     const { rows } = await pool.query(
       `SELECT * from "recipes"
@@ -26,7 +25,6 @@ categories.get("/category/:id", async (req, res) => {
     );
     res.json(rows);
   } catch (err) {
-    console.log(err);
     res.sendStatus(500);
   }
 });
